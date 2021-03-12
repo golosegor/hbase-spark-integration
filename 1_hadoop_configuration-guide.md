@@ -1,17 +1,5 @@
 *** replace 172.19.152.4 with you wsl2 IP address
 
-set-up environment variables in ~/.bashrc
-
-```bash
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export HADOOP_HOME=/opt/hadoop-2.8.5
-export HADOOP_MAPRED_HOME=/opt/hadoop-2.8.5
-export HIVE_HOME=/opt/apache-hive-3.1.2-bin
-export SPARK_HOME=/opt/spark-2.4.7-bin-hadoop2.7
-export HBASE_HOME=/opt/hbase-1.4.13
-export PATH=$PATH:$HADOOP_HOME/bin:$HIVE_HOME/bin:$SPARK_HOME/bin:$HBASE_HOME/bin
-```
-
 set-up host name binding for hdfs in /opt/hadoop-2.8.5/etc/hadoop/hdfs-site.xml
 
 ```xml
