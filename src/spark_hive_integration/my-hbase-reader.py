@@ -34,8 +34,15 @@ def hbase_read_demo(spark: SparkSession):
         .format(data_source_format) \
         .load()
 
-    df.show(2)
-
+    df.show()
+    print("TRYING TO WRITE YO")
+    from pyspark.sql import functions as F
+    updatedValue = df.withColumn("rowkey", F.when(df["rowkey"] == 1000, 1001).otherwise(df["rowkey"]))
+    updatedValue.write \
+        .options(catalog=catalog) \
+        .format(data_source_format) \
+        .save()
+    updatedValue.show()
 
 def create_spark_session() -> SparkSession:
     number_cores = 8
@@ -44,7 +51,10 @@ def create_spark_session() -> SparkSession:
         pyspark.SparkConf()
             .setMaster(f'local[{number_cores}]')
             .set('spark.driver.memory', f'{memory_gb}g')
+            .set('spark.hadoop.validateOutputSpecs', 'false')
             .set('spark.sql.streaming.forceDeleteTempCheckpointLocation', 'true')
+            .set('spark.driver.userClassPathFirst', 'true')
+            .set('spark.executor.userClassPathFirst', 'true')
     )
     sc = pyspark.SparkContext(conf=conf).getOrCreate()
     sc.setLogLevel("WARN")
@@ -53,6 +63,7 @@ def create_spark_session() -> SparkSession:
 
 
 if __name__ == "__main__":
+    # must be started with python 3.7
     spark_session = create_spark_session()
     hbase_read_demo(spark_session)
     spark_session.stop()

@@ -6,6 +6,25 @@ set-up java environment variable in vi /opt/hbase-1.4.13/conf/hbase-env.sh
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ```
 
+configure bind addresses
+
+```bash
+<configuration>
+    <property>
+    <name>hbase.master.info.bindAddress</name>
+    <value>172.19.152.4</value>
+    <description>The address for the hbase master web UI
+    </description>
+  </property>
+  <property>
+    <name>hbase.regionserver.info.bindAddress</name>
+    <value>172.19.152.4</value>
+    <description>The address for the hbase regionserver web UI
+    </description>
+  </property>
+</configuration>
+```
+
 start hbase
 
 ```bash
